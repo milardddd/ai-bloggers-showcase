@@ -95,7 +95,7 @@ export function ChatDemo({ blogger, onFinish }: { blogger: Blogger; onFinish: ()
               {isBot && (
                 <div className="relative size-7 shrink-0 overflow-hidden rounded-full">
                   {showAvatar && (
-                    <Image src={blogger.portrait} alt="" fill sizes="28px" className="object-cover object-top" />
+                    <Image src={blogger.avatar} alt="" fill sizes="28px" className="object-cover" />
                   )}
                 </div>
               )}
@@ -120,7 +120,7 @@ export function ChatDemo({ blogger, onFinish }: { blogger: Blogger; onFinish: ()
             className="flex items-end gap-2"
           >
             <div className="relative size-7 shrink-0 overflow-hidden rounded-full">
-              <Image src={blogger.portrait} alt="" fill sizes="28px" className="object-cover object-top" />
+              <Image src={blogger.avatar} alt="" fill sizes="28px" className="object-cover" />
             </div>
             <div className="flex gap-1 rounded-[20px] rounded-bl-md bg-surface-2 px-4 py-3.5" role="status" aria-label={`${blogger.name.split(" ")[0]} печатает`}>
               {[0, 1, 2].map((d) => (

@@ -127,7 +127,7 @@ export function Showcase() {
                     style={{ background: `conic-gradient(${b.accent}, transparent 60%, ${b.accent})` }}
                   />
                   <span className="relative size-[66px] overflow-hidden rounded-full border-[3px] border-bg">
-                    <Image src={b.portrait} alt="" fill sizes="66px" className="object-cover object-[50%_20%]" />
+                    <Image src={b.avatar} alt="" fill sizes="66px" className="object-cover" />
                   </span>
                   <span className="absolute right-0.5 bottom-0.5 size-3.5 rounded-full border-[3px] border-bg bg-emerald-400" />
                 </span>
@@ -187,7 +187,7 @@ export function Showcase() {
             <div className="flex -space-x-3">
               {bloggers.map((b) => (
                 <span key={b.id} className="relative size-11 overflow-hidden rounded-full border-2 border-surface">
-                  <Image src={b.portrait} alt="" fill sizes="44px" className="object-cover object-[50%_20%]" />
+                  <Image src={b.avatar} alt="" fill sizes="44px" className="object-cover" />
                 </span>
               ))}
             </div>

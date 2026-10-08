@@ -202,7 +202,7 @@ function PostViewer({ post, blogger, liked, onLike, onClose }: ViewerProps) {
       >
         <div className="flex items-center gap-3 px-4 pt-[calc(var(--safe-top)+12px)] pb-3">
           <div className="relative size-9 overflow-hidden rounded-full" style={{ boxShadow: `0 0 0 2px ${blogger.accent}` }}>
-            <Image src={blogger.portrait} alt="" fill sizes="36px" className="object-cover object-top" />
+            <Image src={blogger.avatar} alt="" fill sizes="36px" className="object-cover" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-semibold">{blogger.nick}</p>

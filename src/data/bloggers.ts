@@ -27,6 +27,8 @@ export type Blogger = {
   bio: string;
   accent: string;
   portrait: string;
+  /** Квадрат по лицу для маленьких аватаров (сторис, чат) */
+  avatar: string;
   followers: string;
   postsCount: number;
   replyTime: string;
@@ -55,6 +57,7 @@ export const bloggers: Blogger[] = [
     bio: "Пишу из Лиссабона о том, как замедлиться: утренние ритуалы, рынки по субботам и вечера без телефона.",
     accent: "#B79CFF",
     portrait: img("lina", "portrait"),
+    avatar: img("lina", "avatar"),
     followers: "312K",
     postsCount: 486,
     replyTime: "~1 мин",
@@ -97,11 +100,12 @@ export const bloggers: Blogger[] = [
     bio: "Строю продукты и разбираю, как AI меняет бизнес. Кейсы, метрики, инструменты — коротко и по делу.",
     accent: "#5CE1E6",
     portrait: img("mark", "portrait"),
+    avatar: img("mark", "avatar"),
     followers: "186K",
     postsCount: 312,
     replyTime: "~2 мин",
     posts: [
-      { id: "y1", image: img("mark", "portrait"), caption: "Новый портрет для конференции. Выступаю про AI в продуктах, слайды выложу в Telegram", likes: 9420, ago: "4 ч" },
+      { id: "y1", image: img("mark", "portrait"), caption: "Утренний кофе и план на день. Лучшие решения я принимаю до первого созвона", likes: 9420, ago: "4 ч" },
       { id: "y2", image: img("mark", "portrait"), locked: true, caption: "Разбор: как команда из трёх человек дошла до $1M ARR за 9 месяцев", likes: 14200, ago: "2 д" },
       { id: "y3", image: img("mark", "portrait"), locked: true, caption: "Рабочее место. Один монитор, одна задача, ноль лишнего", likes: 7310, ago: "4 д" },
       { id: "y4", image: img("mark", "portrait"), locked: true, caption: "Питч-дек из 10 слайдов, который закрыл раунд. Слайд 4 — главный", likes: 11800, ago: "6 д" },
@@ -136,11 +140,12 @@ export const bloggers: Blogger[] = [
     bio: "Мода как высказывание. Снимаю стритстайл недель моды, собираю капсулы и говорю, какие тренды пора отпустить.",
     accent: "#FF5C8A",
     portrait: img("eva", "portrait"),
+    avatar: img("eva", "avatar"),
     followers: "428K",
     postsCount: 734,
     replyTime: "~1 мин",
     posts: [
-      { id: "e1", image: img("eva", "portrait"), caption: "Съёмка для журнала. Чёрный блейзер, чёлка и никаких компромиссов 🖤", likes: 32100, ago: "1 ч" },
+      { id: "e1", image: img("eva", "portrait"), caption: "Париж между показами. Чёрное, чёлка и никаких компромиссов 🖤", likes: 32100, ago: "1 ч" },
       { id: "e2", image: img("eva", "portrait"), locked: true, caption: "Чёрный — не скучно. Чёрный — это когда фактура говорит за тебя", likes: 27400, ago: "1 д" },
       { id: "e3", image: img("eva", "portrait"), locked: true, caption: "Бэкстейдж: за 10 минут до выхода все одинаково нервничают", likes: 19800, ago: "3 д" },
       { id: "e4", image: img("eva", "portrait"), locked: true, caption: "Капсула на неделю из 7 вещей. Сохраняй, пригодится", likes: 41200, ago: "5 д" },
@@ -175,11 +180,12 @@ export const bloggers: Blogger[] = [
     bio: "Показываю мир, ради которого стоит вставать в 5 утра. Трейлы, сёрф, походы и честно о том, как к этому прийти.",
     accent: "#C6F432",
     portrait: img("david", "portrait"),
+    avatar: img("david", "avatar"),
     followers: "254K",
     postsCount: 528,
     replyTime: "~3 мин",
     posts: [
-      { id: "t1", image: img("david", "portrait"), caption: "Ветер на перевале и куртка, которая пережила три сезона. Лучший офис в мире 🏔", likes: 23600, ago: "3 ч" },
+      { id: "t1", image: img("david", "portrait"), caption: "Перевал, ветер и куртка, которая пережила три сезона. Лучший офис в мире 🏔", likes: 23600, ago: "3 ч" },
       { id: "t2", image: img("david", "portrait"), locked: true, caption: "Первая волна сезона в Эрисейре. Упал девять раз, встал десять", likes: 16900, ago: "2 д" },
       { id: "t3", image: img("david", "portrait"), locked: true, caption: "120 км трейла за 3 дня. Ноги против, голова — за", likes: 19200, ago: "4 д" },
       { id: "t4", image: img("david", "portrait"), locked: true, caption: "Палатка с видом на миллион. Аренда — бесплатно, дорога — 14 часов", likes: 28700, ago: "6 д" },
