@@ -14,7 +14,7 @@ const nextConfig: NextConfig = {
   images: isPages ? { loader: "custom", loaderFile: "./src/lib/image-loader.ts" } : {},
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
   // Разрешаем открывать dev-сервер с телефона в локальной сети
-  allowedDevOrigins: ["192.168.*.*", "10.*.*.*", "*.local"],
+  allowedDevOrigins: ["192.168.*.*", "10.*.*.*", "172.20.*.*", "*.local"],
   turbopack: {
     rules: {
       "*.css": {

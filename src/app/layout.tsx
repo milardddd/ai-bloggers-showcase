@@ -15,6 +15,8 @@ const onest = Onest({
 });
 
 export const metadata: Metadata = {
+  // Абсолютные ссылки на превью для Telegram и соцсетей (картинка — src/app/opengraph-image.jpg)
+  metadataBase: new URL("https://milardddd.github.io"),
   title: "MIRRA — AI-блогеры, с которыми можно поговорить",
   description:
     "Четыре AI-персонажа ведут блоги, делятся историями и отвечают в личке. Выбери своего и продолжи общение в Telegram.",
@@ -23,6 +25,9 @@ export const metadata: Metadata = {
     description: "Живые истории. Только не совсем люди.",
     type: "website",
     locale: "ru_RU",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
