@@ -2,7 +2,6 @@
 
 import { motion } from "motion/react";
 import Image from "next/image";
-import { BRAND, BRAND_GRADIENT } from "@/lib/brand";
 import type { Blogger } from "@/data/bloggers";
 import { haptic } from "@/lib/telegram";
 
@@ -26,12 +25,6 @@ export function BloggerCard({ blogger, index, onOpen }: Props) {
       transition={{ duration: 0.6, delay: (index % 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
       className="relative h-full"
     >
-      {/* Цветное свечение персонажа под карточкой (градиент вместо blur — дешевле при прокрутке) */}
-      <div
-        aria-hidden
-        className="absolute -inset-x-4 -bottom-14 top-[38%] opacity-40"
-        style={{ background: `radial-gradient(closest-side, ${BRAND}, ${BRAND}80 45%, transparent)` }}
-      />
       <motion.button
         type="button"
         onClick={open}
@@ -57,10 +50,7 @@ export function BloggerCard({ blogger, index, onOpen }: Props) {
           <div className="absolute inset-x-0 bottom-0 hidden h-16 bg-gradient-to-t from-surface to-transparent lg:block" />
 
           <div className="absolute inset-x-4 top-4 flex justify-end">
-            <span
-              className="rounded-full px-2.5 py-1 text-xs font-semibold text-black"
-              style={{ background: BRAND_GRADIENT }}
-            >
+            <span className="rounded-full bg-ink px-2.5 py-1 text-xs font-semibold text-black">
               {blogger.topic}
             </span>
           </div>

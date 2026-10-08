@@ -80,7 +80,7 @@ export function Showcase() {
             className="mt-4 font-display text-[40px] leading-[1.02] font-semibold tracking-tight sm:text-6xl"
           >
             Живые истории.{" "}
-            <span className="bg-gradient-to-r from-[#FFB38A] via-[#FF5C8A] to-[#B79CFF] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#B79CFF] via-[#FF5C8A] to-[#5CE1E6] bg-clip-text text-transparent">
               Только не совсем люди.
             </span>
           </motion.h1>

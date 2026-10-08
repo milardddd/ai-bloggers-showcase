@@ -3,7 +3,7 @@
 import { AnimatePresence, animate, motion, useIsPresent, useMotionValue } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { BRAND, BRAND_GRADIENT } from "@/lib/brand";
+import { BRAND } from "@/lib/brand";
 import type { Blogger } from "@/data/bloggers";
 import { getWebApp, haptic } from "@/lib/telegram";
 import { ChatDemo } from "./chat-demo";
@@ -214,7 +214,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
                 >
                   <span
                     className="block h-[3px] w-full rounded-full transition-colors duration-300"
-                    style={{ background: i === index ? BRAND_GRADIENT : "rgba(255,255,255,0.3)" }}
+                    style={{ background: i === index ? "var(--color-ink)" : "rgba(255,255,255,0.3)" }}
                   />
                 </button>
               ))}
@@ -256,10 +256,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
               transition={{ delay: 0.1, duration: 0.4 }}
               className="absolute inset-x-0 bottom-0 z-10 px-5 pb-4"
             >
-              <span
-                className="mb-2 inline-block rounded-full px-2.5 py-1 text-xs font-semibold text-black"
-                style={{ background: BRAND_GRADIENT }}
-              >
+              <span className="mb-2 inline-block rounded-full bg-ink px-2.5 py-1 text-xs font-semibold text-black">
                 {blogger.topic}
               </span>
               <h2 className="font-display text-[30px] leading-none font-semibold tracking-tight">{blogger.name}</h2>
