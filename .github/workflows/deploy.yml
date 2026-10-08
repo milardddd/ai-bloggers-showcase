@@ -26,6 +26,7 @@ jobs:
           cache: npm
       - uses: actions/configure-pages@v6
       - run: npm ci
+      - run: npm run images
       - run: npm run build
         env:
           GITHUB_PAGES: "true"

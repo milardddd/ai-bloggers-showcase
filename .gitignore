@@ -47,3 +47,5 @@ next-env.d.ts
 /*.jpg
 /*.png
 
+# нарезка картинок для GitHub Pages (npm run images)
+/public/_img/

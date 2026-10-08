@@ -39,7 +39,7 @@ export function Showcase() {
       <div
         id="scroll-root"
         // Непрозрачный фон: Safari 26 берёт его цвет для статус-бара и не рисует свой полупрозрачный блюр
-        className={`no-scrollbar fixed inset-0 overflow-x-hidden bg-bg ${open ? "overflow-hidden" : "overflow-y-auto"}`}
+        className="no-scrollbar fixed inset-0 overflow-x-hidden overflow-y-auto bg-bg"
       >
       {/* Фоновое «северное сияние» из акцентов персонажей.
           Радиальные градиенты вместо filter: blur — тот же мягкий свет, но без перерисовки размытия

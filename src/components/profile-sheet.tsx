@@ -183,7 +183,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
             <button
               type="button"
               onClick={onClose}
-              className="absolute top-10 right-3 z-20 flex size-11 items-center justify-center rounded-full bg-black/35 backdrop-blur-md"
+              className="absolute top-10 right-3 z-20 flex size-11 items-center justify-center rounded-full bg-black/45"
               aria-label="Закрыть"
             >
               <svg viewBox="0 0 20 20" className="size-5" fill="currentColor" aria-hidden>
@@ -228,7 +228,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
                   key={d}
                   type="button"
                   onClick={() => go(d)}
-                  className="pointer-events-auto flex size-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-md transition hover:bg-black/60"
+                  className="pointer-events-auto flex size-11 items-center justify-center rounded-full bg-black/50 transition hover:bg-black/60"
                   aria-label={d < 0 ? "Предыдущий персонаж" : "Следующий персонаж"}
                 >
                   <svg viewBox="0 0 20 20" fill="currentColor" className={`size-5 ${d < 0 ? "rotate-180" : ""}`} aria-hidden>
@@ -276,7 +276,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
 
           <div ref={tabsAnchorRef} />
           {/* Табы прилипают к верху шита при прокрутке */}
-          <div className="sticky top-0 z-10 bg-surface/90 px-4 pt-6 pb-2 backdrop-blur-xl">
+          <div className="sticky top-0 z-10 bg-surface px-4 pt-6 pb-2">
             <div className="flex rounded-2xl bg-surface-2 p-1">
               {(
                 [
