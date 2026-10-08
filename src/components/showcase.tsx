@@ -60,13 +60,6 @@ export function Showcase() {
           <span className="font-display text-lg font-bold tracking-[0.18em]">
             MIRRA<span className="text-[#FF5C8A]">.</span>
           </span>
-          <span className="flex items-center gap-2 rounded-full border border-line bg-white/5 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur">
-            <span className="relative flex size-2">
-              <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
-              <span className="relative size-2 rounded-full bg-emerald-400" />
-            </span>
-            4 персоны онлайн
-          </span>
         </header>
 
         {/* Hero */}

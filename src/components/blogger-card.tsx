@@ -55,14 +55,7 @@ export function BloggerCard({ blogger, index, onOpen }: Props) {
           {/* Мягкий переход фото в фон карточки на десктопе */}
           <div className="absolute inset-x-0 bottom-0 hidden h-16 bg-gradient-to-t from-surface to-transparent lg:block" />
 
-          <div className="absolute inset-x-4 top-4 flex items-center justify-between">
-            <span className="flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1 text-xs font-medium backdrop-blur-md">
-              <span className="relative flex size-2">
-                <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
-                <span className="relative size-2 rounded-full bg-emerald-400" />
-              </span>
-              в сети
-            </span>
+          <div className="absolute inset-x-4 top-4 flex justify-end">
             <span
               className="rounded-full px-2.5 py-1 text-xs font-semibold text-black"
               style={{ background: blogger.accent }}
@@ -72,7 +65,7 @@ export function BloggerCard({ blogger, index, onOpen }: Props) {
           </div>
         </div>
 
-        <div className="@container absolute inset-x-0 bottom-0 flex flex-col p-5 lg:static lg:flex-1 lg:pt-1">
+        <div className="@container absolute inset-x-0 bottom-0 flex flex-col p-5 lg:static lg:flex-1 lg:pt-5">
           <h3 className="font-display text-[26px] leading-[1.05] font-semibold tracking-tight lg:text-[24px]">
             {blogger.name}
           </h3>
