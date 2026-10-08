@@ -1,5 +1,5 @@
 /** Единая точка правды для ссылки на бота. Поменять username — и всё. */
-export const TELEGRAM_BOT_URL = "https://t.me/mirra_ai_bot";
+export const TELEGRAM_BOT_URL = "https://t.me/mirra_bloggers_bot";
 
 export const UTM_KEYS = [
   "utm_source",
