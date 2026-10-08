@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MIRRA — витрина AI-блогеров
 
-## Getting Started
+Mobile-first прототип витрины для платформы виртуальных компаньонов: каталог из четырёх AI-блогеров, профиль в виде bottom sheet с лентой публикаций и демо-диалогом, переход в Telegram с пробросом UTM.
 
-First, run the development server:
+**Демо:** https://milardddd.github.io/ai-bloggers-showcase/ · **Стек:** Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · Motion (ex Framer Motion)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Что внутри
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Каталог** — 4 персонажа (2 ♀ / 2 ♂) с разной внешностью, стилем и тематикой: lifestyle, бизнес/IT, fashion, спорт/путешествия. У каждого свой акцентный цвет, который проходит через карточку, профиль и чат.
+- **Сторис-кружки** в hero — самый быстрый вход: сразу открывают диалог с персонажем.
+- **Профиль — bottom sheet**: закрывается свайпом вниз, тапом по фону, Esc или системной кнопкой «Назад» в Telegram (если открыт пост, «Назад» сначала закрывает его). Свайп по обложке влево/вправо переключает персонажей (на десктопе — стрелки).
+- **Лента**: 4 публикации; полноэкранный просмотр, лайк двойным тапом, закрытие свайпом вниз.
+- **Демо-диалог**: персонаж пишет первым, пользователь отвечает чипами (без клавиатуры), индикатор «печатает…», у каждого персонажа свой голос. После 2 обменов — приглашение продолжить в Telegram и пульсирующая CTA.
+- **«Перейти в Telegram»** — липкая кнопка в зоне большого пальца на странице (прячется, когда открыт профиль или виден финальный CTA-блок) и закреплённая кнопка в профиле.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Решения и почему
 
-## Learn More
+- **Bottom sheet вместо модалки, чипы вместо инпута, никаких hover-зависимостей** — продукт будут встраивать в Telegram Mini Apps, поэтому интерфейс ведёт себя как нативное приложение. Учтены `safe-area-inset-*` (`viewport-fit=cover`), `dvh`, все тап-зоны ≥ 44 px.
+- **Telegram WebApp SDK**: внутри Mini App вызываются `ready()` / `expand()`, тапы дают `HapticFeedback`, ссылка открывается через `openTelegramLink` (без выхода во внешний браузер), «Назад» закрывает профиль. Вне Telegram всё работает как обычный сайт.
+- **UTM** (`src/lib/telegram.ts`). Ссылка на бота — одна константа `TELEGRAM_BOT_URL`. UTM из URL сохраняются в `sessionStorage` (не теряются при навигации) и попадают в ссылку двумя способами:
+  - в `start`-параметр — **единственное, что Telegram реально передаёт боту**. Формат `lina__s-instagram__m-reels__c-launch` (id персонажа + сокращённые UTM, лимит 64 символа `[A-Za-z0-9_-]`), так бот знает и источник, и с каким персонажем начать;
+  - дублируются обычными `utm_*` query-параметрами — для редиректоров и сервисов аналитики ссылок.
+- **Тёмная editorial-эстетика**: почти чёрный фон, тёплый off-white текст, крупные портреты; фирменный голубой Telegram используется *только* для главного CTA, чтобы он считывался мгновенно. Шрифты Unbounded (заголовки) + Onest (текст) — оба с кириллицей, грузятся через `next/font` без layout shift.
+- **Производительность**: страница статически пререндерится, изображения через `next/image` с корректными `sizes` (AVIF/WebP, lazy-loading), предзагружается только первый портрет. Анимации — только `transform`/`opacity`, учитывается `prefers-reduced-motion`.
+- **Честность**: в чате и футере указано, что персонажи созданы AI, — это снижает риск разочарования и вопросов к платформе.
+- **Деплой на GitHub Pages**: статический экспорт (`output: "export"`) с `basePath`, сборка и публикация через GitHub Actions при пуше в `main`. Серверной оптимизации картинок на Pages нет, поэтому изображения заранее сжаты до 1080×1350.
+- **Данные** — локальные моки в `src/data/bloggers.ts` (персонажи, посты, сценарии диалогов). Добавить персонажа = добавить объект и папку с картинками.
 
-To learn more about Next.js, take a look at the following resources:
+## Структура
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+  app/              layout (шрифты, viewport, метаданные), page
+  components/
+    showcase.tsx       страница: hero, сторис, каталог, CTA, sticky-кнопка
+    blogger-card.tsx   карточка персонажа
+    profile-sheet.tsx  bottom sheet профиля, свайпы, табы
+    post-feed.tsx      лента + полноэкранный просмотр поста
+    chat-demo.tsx      сценарный демо-диалог
+    telegram-button.tsx, telegram-init.tsx
+  data/bloggers.ts  моки
+  lib/telegram.ts   константа ссылки, UTM, Telegram WebApp helpers
+public/bloggers/    портреты и публикации (4:5)
+PROMPTS.md          промпты для генерации портретов и публикаций
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## AI-инструменты
 
-## Deploy on Vercel
+- **Claude Code** — концепция, код, тексты персонажей и сценарии диалогов, визуальная проверка через headless Chrome.
+- **Midjourney / Flux** — портреты и публикации персонажей (промпты — в [`PROMPTS.md`](./PROMPTS.md)).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Время
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+≈ _N_ часа: концепция — …, реализация — …, генерация изображений — ….
