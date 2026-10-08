@@ -109,11 +109,13 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
         onClick={onClose}
       />
 
+      {/* Анимируем transform, а не y: так Motion отдаёт анимацию браузеру (WAAPI) и она идёт
+          в композиторе, не подвисая от работы основного потока при монтировании шита */}
       <motion.div
         className="absolute inset-x-0 bottom-0 mx-auto h-[94dvh] max-w-[520px]"
-        initial={{ y: "100%" }}
-        animate={{ y: 0 }}
-        exit={{ y: "100%", transition: { duration: 0.28, ease: [0.32, 0, 0.67, 0] } }}
+        initial={{ transform: "translateY(100%)" }}
+        animate={{ transform: "translateY(0%)" }}
+        exit={{ transform: "translateY(100%)", transition: { duration: 0.28, ease: [0.32, 0, 0.67, 0] } }}
         transition={{ type: "spring", stiffness: 340, damping: 36 }}
         onAnimationComplete={() => {
           // focus() форсирует пересчёт раскладки — делаем его после выезда, а не в первый кадр
@@ -158,9 +160,9 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
                 custom={direction}
                 className="absolute inset-0"
                 variants={{
-                  enter: (d: number) => ({ x: d >= 0 ? "40%" : "-40%", opacity: 0, scale: 1.05 }),
-                  center: { x: 0, opacity: 1, scale: 1 },
-                  exit: (d: number) => ({ x: d >= 0 ? "-25%" : "25%", opacity: 0 }),
+                  enter: (d: number) => ({ transform: `translateX(${d >= 0 ? 40 : -40}%) scale(1.05)`, opacity: 0 }),
+                  center: { transform: "translateX(0%) scale(1)", opacity: 1 },
+                  exit: (d: number) => ({ transform: `translateX(${d >= 0 ? -25 : 25}%) scale(1)`, opacity: 0 }),
                 }}
                 initial="enter"
                 animate="center"
@@ -169,8 +171,8 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
               >
                 <motion.div
                   className="absolute inset-0"
-                  initial={{ scale: 1.12 }}
-                  animate={{ scale: 1 }}
+                  initial={{ transform: "scale(1.12)" }}
+                  animate={{ transform: "scale(1)" }}
                   transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <Image
@@ -248,8 +250,8 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
 
             <motion.div
               key={`title-${blogger.id}`}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, transform: "translateY(12px)" }}
+              animate={{ opacity: 1, transform: "translateY(0px)" }}
               transition={{ delay: 0.1, duration: 0.4 }}
               className="absolute inset-x-0 bottom-0 z-10 px-5 pb-4"
             >

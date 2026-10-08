@@ -39,8 +39,7 @@ export function Showcase() {
       <div
         id="scroll-root"
         // Непрозрачный фон: Safari 26 берёт его цвет для статус-бара и не рисует свой полупрозрачный блюр
-        // Пока открыт профиль, бесконечные анимации страницы под затемнением стоят на паузе
-        className={`no-scrollbar fixed inset-0 overflow-x-hidden overflow-y-auto bg-bg ${open ? "[&_*]:[animation-play-state:paused]" : ""}`}
+        className="no-scrollbar fixed inset-0 overflow-x-hidden overflow-y-auto bg-bg"
       >
       {/* Фоновое «северное сияние» из акцентов персонажей.
           Радиальные градиенты вместо filter: blur — тот же мягкий свет, но без перерисовки размытия
