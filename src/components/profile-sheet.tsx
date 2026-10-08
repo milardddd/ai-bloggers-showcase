@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useDragControls, useIsPresent } from "motion/react";
+import { AnimatePresence, animate, motion, useIsPresent, useMotionValue } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Blogger } from "@/data/bloggers";
@@ -25,7 +25,11 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
   const [direction, setDirection] = useState(0);
   const [chatSeen, setChatSeen] = useState(initialTab === "chat");
   const [ctaPulse, setCtaPulse] = useState(false);
-  const dragControls = useDragControls();
+  // Ленту и чат монтируем, когда шит доехал: в первый кадр выезда остаётся только лёгкая шапка
+  const [entered, setEntered] = useState(false);
+  // Смещение при перетаскивании за ручку. Обычный pan вместо drag: drag включал в Motion
+  // систему замеров раскладки, и монтирование шита давало рывок в первый кадр
+  const dragY = useMotionValue(0);
   // Во время анимации закрытия шит уже не должен перехватывать касания страницы
   const isPresent = useIsPresent();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -57,10 +61,9 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
     }
   };
 
-  // Фокус уходит в шит и возвращается туда, откуда его открыли
+  // Фокус возвращается туда, откуда шит открыли (сам шит получает фокус, когда доедет)
   useEffect(() => {
     const opener = document.activeElement as HTMLElement | null;
-    rootRef.current?.focus({ preventScroll: true });
     return () => opener?.focus({ preventScroll: true });
   }, []);
 
@@ -107,27 +110,32 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
       />
 
       <motion.div
-        className="absolute inset-x-0 bottom-0 mx-auto flex h-[94dvh] max-w-[520px] flex-col rounded-t-[30px] bg-surface shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.8)] after:absolute after:inset-x-0 after:top-full after:h-[100lvh] after:bg-surface after:content-['']"
+        className="absolute inset-x-0 bottom-0 mx-auto h-[94dvh] max-w-[520px]"
         initial={{ y: "100%" }}
         animate={{ y: 0 }}
         exit={{ y: "100%", transition: { duration: 0.28, ease: [0.32, 0, 0.67, 0] } }}
         transition={{ type: "spring", stiffness: 340, damping: 36 }}
-        drag="y"
-        dragControls={dragControls}
-        dragListener={false}
-        dragConstraints={{ top: 0, bottom: 0 }}
-        dragElastic={{ top: 0, bottom: 0.7 }}
-        onDragEnd={(_, info) => {
-          if (info.offset.y > 120 || info.velocity.y > 700) onClose();
+        onAnimationComplete={() => {
+          // focus() форсирует пересчёт раскладки — делаем его после выезда, а не в первый кадр
+          if (!entered) rootRef.current?.focus({ preventScroll: true });
+          setEntered(true);
         }}
       >
+      <motion.div
+        className="relative flex h-full flex-col rounded-t-[30px] bg-surface shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.8)] after:absolute after:inset-x-0 after:top-full after:h-[100lvh] after:bg-surface after:content-['']"
+        style={{ y: dragY }}
+      >
         {/* Зона захвата: тянем вниз — закрываем */}
-        <div
+        <motion.div
           className="absolute inset-x-0 top-0 z-20 flex h-5 cursor-grab touch-none justify-center pt-2 active:cursor-grabbing"
-          onPointerDown={(e) => dragControls.start(e)}
+          onPan={(_, info) => dragY.set(Math.max(0, info.offset.y) * 0.7)}
+          onPanEnd={(_, info) => {
+            if (info.offset.y > 120 || info.velocity.y > 700) onClose();
+            else animate(dragY, 0, { type: "spring", stiffness: 400, damping: 36 });
+          }}
         >
           <span className="h-1 w-9 rounded-full bg-white/40" />
-        </div>
+        </motion.div>
 
 
         <div ref={bodyRef} className="no-scrollbar flex-1 overflow-y-auto overscroll-contain rounded-t-[30px] pb-[calc(var(--safe-bottom)+88px)]">
@@ -277,7 +285,15 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
           <div ref={tabsAnchorRef} />
           {/* Табы прилипают к верху шита при прокрутке */}
           <div className="sticky top-0 z-10 bg-surface px-4 pt-6 pb-2">
-            <div className="flex rounded-2xl bg-surface-2 p-1">
+            <div className="relative flex rounded-2xl bg-surface-2 p-1">
+              {/* Пилюля едет между табами обычным transform: layoutId заставлял Motion измерять раскладку при открытии шита */}
+              <motion.span
+                aria-hidden
+                className="absolute inset-y-1 left-1 w-[calc(50%-4px)] rounded-xl bg-white/10"
+                initial={false}
+                animate={{ x: tab === "feed" ? "0%" : "100%" }}
+                transition={{ type: "spring", stiffness: 420, damping: 34 }}
+              />
               {(
                 [
                   ["feed", "Лента"],
@@ -290,13 +306,6 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
                   onClick={() => selectTab(key)}
                   className="relative flex h-11 flex-1 items-center justify-center gap-2 text-[15px] font-semibold"
                 >
-                  {tab === key && (
-                    <motion.span
-                      layoutId="tab-pill"
-                      className="absolute inset-0 rounded-xl bg-white/10"
-                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                    />
-                  )}
                   <span className={`relative transition-colors ${tab === key ? "text-ink" : "text-muted"}`}>{label}</span>
                   {key === "chat" && !chatSeen && (
                     <span className="relative flex size-2">
@@ -310,7 +319,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
           </div>
 
           <div className="min-h-[40dvh]">
-            {tab === "feed" ? (
+            {!entered ? null : tab === "feed" ? (
               <PostFeed key={`feed-${blogger.id}`} blogger={blogger} />
             ) : (
               <ChatDemo key={`chat-${blogger.id}`} blogger={blogger} onFinish={() => setCtaPulse(true)} />
@@ -328,6 +337,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
             />
           </div>
         </div>
+      </motion.div>
       </motion.div>
     </div>
   );
