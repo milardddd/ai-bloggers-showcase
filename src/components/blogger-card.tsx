@@ -23,7 +23,7 @@ export function BloggerCard({ blogger, index, onOpen }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: (index % 4) * 0.06, ease: [0.22, 1, 0.36, 1] }}
-      className="relative"
+      className="relative h-full"
     >
       {/* Цветное свечение персонажа под карточкой (градиент вместо blur — дешевле при прокрутке) */}
       <div
@@ -37,47 +37,53 @@ export function BloggerCard({ blogger, index, onOpen }: Props) {
         whileTap={{ scale: 0.975 }}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
         aria-label={`Открыть блог: ${blogger.name}`}
-        className="relative block aspect-[4/5] w-full overflow-hidden rounded-[28px] bg-surface text-left ring-1 ring-line"
+        className="relative flex aspect-[4/5] h-full w-full flex-col overflow-hidden rounded-[28px] bg-surface text-left ring-1 ring-line lg:aspect-auto"
       >
-        <Image
-          src={blogger.portrait}
-          alt={`${blogger.name} — AI-блогер, ${blogger.topic}`}
-          fill
-          sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
-          preload={index === 0}
-          fetchPriority={index === 0 ? "high" : undefined}
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10" />
+        {/* На телефоне и планшете текст лежит на фото; в узких карточках десктопа
+            он не читался поверх живых снимков, поэтому с lg уходит под фото */}
+        <div className="absolute inset-0 lg:relative lg:inset-auto lg:aspect-[4/5] lg:w-full">
+          <Image
+            src={blogger.portrait}
+            alt={`${blogger.name} — AI-блогер, ${blogger.topic}`}
+            fill
+            sizes="(min-width: 1024px) 300px, (min-width: 640px) 50vw, 100vw"
+            preload={index === 0}
+            fetchPriority={index === 0 ? "high" : undefined}
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 lg:hidden" />
+          {/* Мягкий переход фото в фон карточки на десктопе */}
+          <div className="absolute inset-x-0 bottom-0 hidden h-16 bg-gradient-to-t from-surface to-transparent lg:block" />
 
-        <div className="absolute inset-x-4 top-4 flex items-center justify-between">
-          <span className="flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1 text-xs font-medium backdrop-blur-md">
-            <span className="relative flex size-2">
-              <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
-              <span className="relative size-2 rounded-full bg-emerald-400" />
+          <div className="absolute inset-x-4 top-4 flex items-center justify-between">
+            <span className="flex items-center gap-1.5 rounded-full bg-black/40 px-2.5 py-1 text-xs font-medium backdrop-blur-md">
+              <span className="relative flex size-2">
+                <span className="absolute inset-0 animate-ping rounded-full bg-emerald-400 opacity-70" />
+                <span className="relative size-2 rounded-full bg-emerald-400" />
+              </span>
+              в сети
             </span>
-            в сети
-          </span>
-          <span
-            className="rounded-full px-2.5 py-1 text-xs font-semibold text-black"
-            style={{ background: blogger.accent }}
-          >
-            {blogger.topic}
-          </span>
+            <span
+              className="rounded-full px-2.5 py-1 text-xs font-semibold text-black"
+              style={{ background: blogger.accent }}
+            >
+              {blogger.topic}
+            </span>
+          </div>
         </div>
 
-        <div className="@container absolute inset-x-0 bottom-0 p-5">
-          <h3 className="font-display text-[26px] leading-[1.05] font-semibold tracking-tight">
+        <div className="@container absolute inset-x-0 bottom-0 flex flex-col p-5 lg:static lg:flex-1 lg:pt-1">
+          <h3 className="font-display text-[26px] leading-[1.05] font-semibold tracking-tight lg:text-[24px]">
             {blogger.name}
           </h3>
-          <p className="mt-1 text-sm text-white/60">
+          <p className="mt-1 text-sm text-white/60 lg:mt-1.5 lg:text-muted">
             @{blogger.nick} · {blogger.location}
           </p>
-          <p className="mt-3 line-clamp-2 text-[15px] leading-snug text-white/85">
+          <p className="mt-3 line-clamp-2 text-[15px] leading-snug text-white/85 lg:text-white/80">
             {blogger.tagline}
           </p>
-          <div className="mt-4 flex flex-col items-stretch gap-3 @[300px]:flex-row @[300px]:items-center @[300px]:justify-between">
-            <span className="text-sm text-white/60">
+          <div className="mt-4 flex flex-col items-stretch gap-3 lg:mt-auto lg:pt-4 @[300px]:flex-row @[300px]:items-center @[300px]:justify-between">
+            <span className="text-sm text-white/60 lg:text-muted">
               <b className="font-semibold text-white">{blogger.followers}</b> подписчиков
             </span>
             <span className="flex h-11 items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-ink px-5 text-[15px] font-semibold text-black">
