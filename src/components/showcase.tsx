@@ -3,6 +3,7 @@
 import { AnimatePresence, MotionConfig, motion, useInView } from "motion/react";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
+import { BRAND_RING } from "@/lib/brand";
 import { bloggers } from "@/data/bloggers";
 import { haptic } from "@/lib/telegram";
 import { BloggerCard } from "./blogger-card";
@@ -46,7 +47,7 @@ export function Showcase() {
           на каждом кадре дрейфа (на телефонах blur(120px) в движении сильно тормозил) */}
       <motion.div aria-hidden animate={{ opacity: open ? 0 : 1 }} transition={{ duration: 0.3 }} className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute -top-[280px] -left-[248px] size-[660px] will-change-transform animate-[drift_18s_ease-in-out_infinite]" style={{ background: "radial-gradient(closest-side, rgb(255 92 138 / 0.18), rgb(255 92 138 / 0.081) 55%, transparent)" }} />
-        <div className="absolute -top-10 -right-[280px] size-[620px] will-change-transform animate-[drift_22s_ease-in-out_infinite_reverse]" style={{ background: "radial-gradient(closest-side, rgb(92 225 230 / 0.14), rgb(92 225 230 / 0.063) 55%, transparent)" }} />
+        <div className="absolute -top-10 -right-[280px] size-[620px] will-change-transform animate-[drift_22s_ease-in-out_infinite_reverse]" style={{ background: "radial-gradient(closest-side, rgb(255 179 138 / 0.12), rgb(255 179 138 / 0.054) 55%, transparent)" }} />
         <div className="absolute top-[calc(60vh-120px)] left-[calc(25%-120px)] size-[600px] will-change-transform animate-[drift_26s_ease-in-out_infinite]" style={{ background: "radial-gradient(closest-side, rgb(183 156 255 / 0.1), rgb(183 156 255 / 0.045) 55%, transparent)" }} />
       </motion.div>
       {/* При открытом профиле затемняем саму страницу: на iOS 26 фиксированный бэкдроп
@@ -79,7 +80,7 @@ export function Showcase() {
             className="mt-4 font-display text-[40px] leading-[1.02] font-semibold tracking-tight sm:text-6xl"
           >
             Живые истории.{" "}
-            <span className="bg-gradient-to-r from-[#B79CFF] via-[#FF5C8A] to-[#5CE1E6] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#FFB38A] via-[#FF5C8A] to-[#B79CFF] bg-clip-text text-transparent">
               Только не совсем люди.
             </span>
           </motion.h1>
@@ -117,7 +118,7 @@ export function Showcase() {
                   <span
                     aria-hidden
                     className="absolute inset-0 rounded-full will-change-transform animate-[ring-spin_6s_linear_infinite]"
-                    style={{ background: `conic-gradient(${b.accent}, transparent 60%, ${b.accent})` }}
+                    style={{ background: BRAND_RING }}
                   />
                   <span className="relative size-[66px] overflow-hidden rounded-full border-[3px] border-bg">
                     <Image src={b.avatar} alt="" fill sizes="66px" className="object-cover" />

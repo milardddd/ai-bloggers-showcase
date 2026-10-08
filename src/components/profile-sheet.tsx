@@ -3,6 +3,7 @@
 import { AnimatePresence, animate, motion, useIsPresent, useMotionValue } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { BRAND, BRAND_GRADIENT } from "@/lib/brand";
 import type { Blogger } from "@/data/bloggers";
 import { getWebApp, haptic } from "@/lib/telegram";
 import { ChatDemo } from "./chat-demo";
@@ -213,7 +214,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
                 >
                   <span
                     className="block h-[3px] w-full rounded-full transition-colors duration-300"
-                    style={{ background: i === index ? blogger.accent : "rgba(255,255,255,0.3)" }}
+                    style={{ background: i === index ? BRAND_GRADIENT : "rgba(255,255,255,0.3)" }}
                   />
                 </button>
               ))}
@@ -257,7 +258,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
             >
               <span
                 className="mb-2 inline-block rounded-full px-2.5 py-1 text-xs font-semibold text-black"
-                style={{ background: blogger.accent }}
+                style={{ background: BRAND_GRADIENT }}
               >
                 {blogger.topic}
               </span>
@@ -311,8 +312,8 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
                   <span className={`relative transition-colors ${tab === key ? "text-ink" : "text-muted"}`}>{label}</span>
                   {key === "chat" && !chatSeen && (
                     <span className="relative flex size-2">
-                      <span className="absolute inset-0 animate-ping rounded-full opacity-75" style={{ background: blogger.accent }} />
-                      <span className="relative size-2 rounded-full" style={{ background: blogger.accent }} />
+                      <span className="absolute inset-0 animate-ping rounded-full opacity-75" style={{ background: BRAND }} />
+                      <span className="relative size-2 rounded-full" style={{ background: BRAND }} />
                     </span>
                   )}
                 </button>

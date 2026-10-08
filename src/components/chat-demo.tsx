@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { BRAND, BRAND_GRADIENT } from "@/lib/brand";
 import type { Blogger, ChatOption } from "@/data/bloggers";
 import { haptic } from "@/lib/telegram";
 
@@ -103,7 +104,7 @@ export function ChatDemo({ blogger, onFinish }: { blogger: Blogger; onFinish: ()
                 className={`max-w-[78%] rounded-[20px] px-3.5 py-2.5 text-[15px] leading-snug ${
                   isBot ? "rounded-bl-md bg-surface-2 text-ink" : "rounded-br-md font-medium text-black"
                 }`}
-                style={isBot ? undefined : { background: blogger.accent }}
+                style={isBot ? undefined : { background: BRAND_GRADIENT }}
               >
                 {msg.text}
               </div>
@@ -154,7 +155,7 @@ export function ChatDemo({ blogger, onFinish }: { blogger: Blogger; onFinish: ()
                 whileTap={{ scale: 0.96 }}
                 onClick={() => pick(option)}
                 className="min-h-11 rounded-full border px-4 py-2 text-left text-[15px] font-medium"
-                style={{ borderColor: `${blogger.accent}66`, color: blogger.accent }}
+                style={{ borderColor: `${BRAND}66`, color: BRAND }}
               >
                 {option.label}
               </motion.button>

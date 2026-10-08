@@ -25,7 +25,6 @@ export type Blogger = {
   location: string;
   tagline: string;
   bio: string;
-  accent: string;
   portrait: string;
   /** Квадрат по лицу для маленьких аватаров (сторис, чат) */
   avatar: string;
@@ -55,7 +54,6 @@ export const bloggers: Blogger[] = [
     location: "Лиссабон",
     tagline: "Медленная жизнь, кофе и утренний свет",
     bio: "Пишу из Лиссабона о том, как замедлиться: утренние ритуалы, рынки по субботам и вечера без телефона.",
-    accent: "#B79CFF",
     portrait: img("lina", "portrait"),
     avatar: img("lina", "avatar"),
     followers: "312K",
@@ -98,7 +96,6 @@ export const bloggers: Blogger[] = [
     location: "Тбилиси",
     tagline: "Стартапы, AI-инструменты и цифры без воды",
     bio: "Строю продукты и разбираю, как AI меняет бизнес. Кейсы, метрики, инструменты — коротко и по делу.",
-    accent: "#5CE1E6",
     portrait: img("mark", "portrait"),
     avatar: img("mark", "avatar"),
     followers: "186K",
@@ -138,7 +135,6 @@ export const bloggers: Blogger[] = [
     location: "Париж",
     tagline: "Стритстайл, монохром и честно о трендах",
     bio: "Мода как высказывание. Снимаю стритстайл недель моды, собираю капсулы и говорю, какие тренды пора отпустить.",
-    accent: "#FF5C8A",
     portrait: img("eva", "portrait"),
     avatar: img("eva", "avatar"),
     followers: "428K",
@@ -178,7 +174,6 @@ export const bloggers: Blogger[] = [
     location: "В пути",
     tagline: "Горы, волны и километры трейла",
     bio: "Показываю мир, ради которого стоит вставать в 5 утра. Трейлы, сёрф, походы и честно о том, как к этому прийти.",
-    accent: "#C6F432",
     portrait: img("david", "portrait"),
     avatar: img("david", "avatar"),
     followers: "254K",

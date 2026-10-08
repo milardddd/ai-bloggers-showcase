@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { BRAND } from "@/lib/brand";
 import type { Blogger, Post } from "@/data/bloggers";
 import { haptic } from "@/lib/telegram";
 import { useTelegramUrl } from "@/lib/use-telegram-url";
@@ -201,7 +202,7 @@ function PostViewer({ post, blogger, liked, onLike, onClose }: ViewerProps) {
         }}
       >
         <div className="flex items-center gap-3 px-4 pt-[calc(var(--safe-top)+12px)] pb-3">
-          <div className="relative size-9 overflow-hidden rounded-full" style={{ boxShadow: `0 0 0 2px ${blogger.accent}` }}>
+          <div className="relative size-9 overflow-hidden rounded-full" style={{ boxShadow: `0 0 0 2px ${BRAND}` }}>
             <Image src={blogger.avatar} alt="" fill sizes="36px" className="object-cover" />
           </div>
           <div className="min-w-0 flex-1">
