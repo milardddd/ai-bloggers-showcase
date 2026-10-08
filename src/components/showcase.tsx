@@ -122,7 +122,6 @@ export function Showcase() {
                   <span className="relative size-[66px] overflow-hidden rounded-full border-[3px] border-bg">
                     <Image src={b.avatar} alt="" fill sizes="66px" className="object-cover" />
                   </span>
-                  <span className="absolute right-0.5 bottom-0.5 size-3.5 rounded-full border-[3px] border-bg bg-emerald-400" />
                 </span>
                 <span className="text-xs font-medium text-white/80">{b.name.split(" ")[0]}</span>
               </motion.button>
