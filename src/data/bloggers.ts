@@ -4,6 +4,8 @@ export type Post = {
   caption: string;
   likes: number;
   ago: string;
+  /** Закрытый пост: в витрине показывается размытым и ведёт в Telegram */
+  locked?: boolean;
 };
 
 export type ChatOption = {
@@ -57,10 +59,10 @@ export const bloggers: Blogger[] = [
     postsCount: 486,
     replyTime: "~1 мин",
     posts: [
-      { id: "m1", image: img("lina", "post-1"), caption: "Утро на балконе в Алфаме. Кофе с кардамоном и ни одного уведомления до девяти ☀️", likes: 18400, ago: "2 ч" },
-      { id: "m2", image: img("lina", "post-2"), caption: "Субботний рынок: пионы, персики и самый честный сыр в городе", likes: 12950, ago: "1 д" },
-      { id: "m3", image: img("lina", "post-3"), caption: "Трамвай 28 на закате. Иногда лучший план — просто ехать до конечной", likes: 21300, ago: "3 д" },
-      { id: "m4", image: img("lina", "post-4"), caption: "Тихий вечер: свеча, плед и книга, которую я откладывала полгода", likes: 9870, ago: "5 д" },
+      { id: "m1", image: img("lina", "portrait"), caption: "Утро на балконе в Алфаме. Кофе с кардамоном и ни одного уведомления до девяти ☀️", likes: 18400, ago: "2 ч" },
+      { id: "m2", image: img("lina", "portrait"), locked: true, caption: "Субботний рынок: пионы, персики и самый честный сыр в городе", likes: 12950, ago: "1 д" },
+      { id: "m3", image: img("lina", "portrait"), locked: true, caption: "Трамвай 28 на закате. Иногда лучший план — просто ехать до конечной", likes: 21300, ago: "3 д" },
+      { id: "m4", image: img("lina", "portrait"), locked: true, caption: "Тихий вечер: свеча, плед и книга, которую я откладывала полгода", likes: 9870, ago: "5 д" },
     ],
     chat: {
       greeting: [
@@ -99,10 +101,10 @@ export const bloggers: Blogger[] = [
     postsCount: 312,
     replyTime: "~2 мин",
     posts: [
-      { id: "y1", image: img("mark", "post-1"), caption: "Мой рабочий стек на 2026: 6 инструментов, которые экономят мне 15 часов в неделю", likes: 9420, ago: "4 ч" },
-      { id: "y2", image: img("mark", "post-2"), caption: "Разбор: как команда из трёх человек дошла до $1M ARR за 9 месяцев", likes: 14200, ago: "2 д" },
-      { id: "y3", image: img("mark", "post-3"), caption: "Рабочее место. Один монитор, одна задача, ноль лишнего", likes: 7310, ago: "4 д" },
-      { id: "y4", image: img("mark", "post-4"), caption: "Питч-дек из 10 слайдов, который закрыл раунд. Слайд 4 — главный", likes: 11800, ago: "6 д" },
+      { id: "y1", image: img("mark", "portrait"), caption: "Новый портрет для конференции. Выступаю про AI в продуктах, слайды выложу в Telegram", likes: 9420, ago: "4 ч" },
+      { id: "y2", image: img("mark", "portrait"), locked: true, caption: "Разбор: как команда из трёх человек дошла до $1M ARR за 9 месяцев", likes: 14200, ago: "2 д" },
+      { id: "y3", image: img("mark", "portrait"), locked: true, caption: "Рабочее место. Один монитор, одна задача, ноль лишнего", likes: 7310, ago: "4 д" },
+      { id: "y4", image: img("mark", "portrait"), locked: true, caption: "Питч-дек из 10 слайдов, который закрыл раунд. Слайд 4 — главный", likes: 11800, ago: "6 д" },
     ],
     chat: {
       greeting: ["Привет. Я Марк", "Есть пара минут? Давай по делу — что сейчас актуально для тебя?"],
@@ -138,10 +140,10 @@ export const bloggers: Blogger[] = [
     postsCount: 734,
     replyTime: "~1 мин",
     posts: [
-      { id: "e1", image: img("eva", "post-1"), caption: "Paris FW, день третий. Главный образ — оверсайз-пальто и ничего лишнего 🖤", likes: 32100, ago: "1 ч" },
-      { id: "e2", image: img("eva", "post-2"), caption: "Чёрный — не скучно. Чёрный — это когда фактура говорит за тебя", likes: 27400, ago: "1 д" },
-      { id: "e3", image: img("eva", "post-3"), caption: "Бэкстейдж: за 10 минут до выхода все одинаково нервничают", likes: 19800, ago: "3 д" },
-      { id: "e4", image: img("eva", "post-4"), caption: "Капсула на неделю из 7 вещей. Сохраняй, пригодится", likes: 41200, ago: "5 д" },
+      { id: "e1", image: img("eva", "portrait"), caption: "Съёмка для журнала. Чёрный блейзер, чёлка и никаких компромиссов 🖤", likes: 32100, ago: "1 ч" },
+      { id: "e2", image: img("eva", "portrait"), locked: true, caption: "Чёрный — не скучно. Чёрный — это когда фактура говорит за тебя", likes: 27400, ago: "1 д" },
+      { id: "e3", image: img("eva", "portrait"), locked: true, caption: "Бэкстейдж: за 10 минут до выхода все одинаково нервничают", likes: 19800, ago: "3 д" },
+      { id: "e4", image: img("eva", "portrait"), locked: true, caption: "Капсула на неделю из 7 вещей. Сохраняй, пригодится", likes: 41200, ago: "5 д" },
     ],
     chat: {
       greeting: ["Ну привет 🖤", "Сразу предупреждаю: бежевый тренч — это не личность. Что обсудим?"],
@@ -177,10 +179,10 @@ export const bloggers: Blogger[] = [
     postsCount: 528,
     replyTime: "~3 мин",
     posts: [
-      { id: "t1", image: img("david", "post-1"), caption: "Рассвет на высоте 4100. 5:12 утра, минус восемь и лучший вид в моей жизни 🏔", likes: 23600, ago: "3 ч" },
-      { id: "t2", image: img("david", "post-2"), caption: "Первая волна сезона в Эрисейре. Упал девять раз, встал десять", likes: 16900, ago: "2 д" },
-      { id: "t3", image: img("david", "post-3"), caption: "120 км трейла за 3 дня. Ноги против, голова — за", likes: 19200, ago: "4 д" },
-      { id: "t4", image: img("david", "post-4"), caption: "Палатка с видом на миллион. Аренда — бесплатно, дорога — 14 часов", likes: 28700, ago: "6 д" },
+      { id: "t1", image: img("david", "portrait"), caption: "Ветер на перевале и куртка, которая пережила три сезона. Лучший офис в мире 🏔", likes: 23600, ago: "3 ч" },
+      { id: "t2", image: img("david", "portrait"), locked: true, caption: "Первая волна сезона в Эрисейре. Упал девять раз, встал десять", likes: 16900, ago: "2 д" },
+      { id: "t3", image: img("david", "portrait"), locked: true, caption: "120 км трейла за 3 дня. Ноги против, голова — за", likes: 19200, ago: "4 д" },
+      { id: "t4", image: img("david", "portrait"), locked: true, caption: "Палатка с видом на миллион. Аренда — бесплатно, дорога — 14 часов", likes: 28700, ago: "6 д" },
     ],
     chat: {
       greeting: ["Йоу! 🏔 Давид на связи", "Сижу у палатки, связь ловит через раз. Спрашивай, пока не пропал!"],

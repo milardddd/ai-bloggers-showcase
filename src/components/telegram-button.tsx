@@ -13,6 +13,16 @@ export function TelegramIcon({ className = "size-5" }: { className?: string }) {
   );
 }
 
+/** Переход по ссылке в Telegram: внутри Mini App её открывает сам Telegram, без выхода во внешний браузер */
+export function openTelegram(e: MouseEvent<HTMLAnchorElement>, href: string) {
+  haptic("medium");
+  const app = getWebApp();
+  if (app) {
+    e.preventDefault();
+    app.openTelegramLink(href);
+  }
+}
+
 type Props = {
   bloggerId?: string;
   label?: string;
@@ -31,15 +41,7 @@ export function TelegramButton({
 }: Props) {
   const href = useTelegramUrl(bloggerId);
 
-  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
-    haptic("medium");
-    const app = getWebApp();
-    if (app) {
-      // Внутри Mini App ссылку открывает сам Telegram, без выхода во внешний браузер
-      e.preventDefault();
-      app.openTelegramLink(href);
-    }
-  };
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => openTelegram(e, href);
 
   const button = (
     <motion.a

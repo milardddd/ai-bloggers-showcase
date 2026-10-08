@@ -5,9 +5,32 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Blogger, Post } from "@/data/bloggers";
 import { haptic } from "@/lib/telegram";
+import { useTelegramUrl } from "@/lib/use-telegram-url";
+import { openTelegram } from "./telegram-button";
 
 const formatLikes = (n: number) =>
   n >= 1000 ? `${(n / 1000).toFixed(1).replace(".0", "").replace(".", ",")}K` : String(n);
+
+function LockIcon({ className = "size-5" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden fill="none" stroke="currentColor" strokeWidth={2}>
+      <rect x="4.5" y="10.5" width="15" height="10" rx="2.5" />
+      <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+// «1 публикация», «3 публикации», «485 публикаций»
+const pluralPosts = (n: number) => {
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod10 === 1 && mod100 !== 11) return "публикация";
+  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return "публикации";
+  return "публикаций";
+};
+
+// Разное кадрирование размытого портрета, чтобы закрытые посты не выглядели одинаково
+const lockedCrops = ["object-[30%_15%]", "object-[70%_60%]", "object-[50%_95%]"];
 
 function HeartIcon({ filled, className = "size-5" }: { filled?: boolean; className?: string }) {
   return (
@@ -21,6 +44,7 @@ export function PostFeed({ blogger }: { blogger: Blogger }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [liked, setLiked] = useState<Record<string, boolean>>({});
   const active = blogger.posts.find((p) => p.id === openId);
+  const telegramHref = useTelegramUrl(blogger.id);
 
   const toggleLike = (id: string, value?: boolean) =>
     setLiked((l) => ({ ...l, [id]: value ?? !l[id] }));
@@ -28,7 +52,43 @@ export function PostFeed({ blogger }: { blogger: Blogger }) {
   return (
     <>
       <div className="grid grid-cols-2 gap-2 px-4 pt-2 pb-4">
-        {blogger.posts.map((post, i) => (
+        {blogger.posts.map((post, i) =>
+          post.locked ? (
+            // Закрытый пост: размытое превью ведёт в Telegram, где «лежат» остальные публикации
+            <motion.a
+              key={post.id}
+              href={telegramHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => openTelegram(e, telegramHref)}
+              initial={{ opacity: 0, transform: "translateY(16px)" }}
+              animate={{ opacity: 1, transform: "translateY(0px)" }}
+              transition={{ delay: i * 0.05, duration: 0.4 }}
+              whileTap={{ scale: 0.97 }}
+              className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface-2"
+              aria-label="Публикация доступна в Telegram"
+            >
+              <Image
+                src={post.image}
+                alt=""
+                fill
+                sizes="64px"
+                className={`scale-125 object-cover blur-xl ${lockedCrops[(i - 1) % lockedCrops.length]}`}
+              />
+              <div className="absolute inset-0 bg-black/35" />
+              <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center">
+                <span className="flex size-11 items-center justify-center rounded-full bg-black/40 ring-1 ring-white/15">
+                  <LockIcon className="size-5" />
+                </span>
+                <span className="text-xs font-semibold text-white/90">В Telegram</span>
+              </span>
+              <span className="absolute bottom-2.5 left-2.5 flex items-center gap-1 text-xs font-semibold">
+                <HeartIcon className="size-3.5" />
+                {formatLikes(post.likes)}
+              </span>
+              <span className="absolute right-2.5 bottom-2.5 text-xs text-white/60">{post.ago}</span>
+            </motion.a>
+          ) : (
           <motion.button
             key={post.id}
             type="button"
@@ -51,8 +111,22 @@ export function PostFeed({ blogger }: { blogger: Blogger }) {
             </span>
             <span className="absolute right-2.5 bottom-2.5 text-xs text-white/60">{post.ago}</span>
           </motion.button>
-        ))}
+          ),
+        )}
       </div>
+
+      <a
+        href={telegramHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => openTelegram(e, telegramHref)}
+        className="mx-auto -mt-1 mb-2 flex w-fit items-center gap-1.5 px-4 py-2 text-sm font-medium text-white/70"
+      >
+        Ещё {blogger.postsCount - 1} {pluralPosts(blogger.postsCount - 1)} в Telegram
+        <svg viewBox="0 0 20 20" fill="currentColor" className="size-4" aria-hidden>
+          <path d="M7.3 4.3a1 1 0 0 1 1.4 0l5 5a1 1 0 0 1 0 1.4l-5 5a1 1 0 1 1-1.4-1.4L11.6 10 7.3 5.7a1 1 0 0 1 0-1.4Z" />
+        </svg>
+      </a>
 
       <AnimatePresence>
         {active && (
