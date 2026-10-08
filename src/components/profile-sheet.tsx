@@ -256,7 +256,7 @@ export function ProfileSheet({ bloggers, index, initialTab, onIndexChange, onClo
               transition={{ delay: 0.1, duration: 0.4 }}
               className="absolute inset-x-0 bottom-0 z-10 px-5 pb-4"
             >
-              <span className="mb-2 inline-block rounded-full bg-ink px-2.5 py-1 text-xs font-semibold text-black">
+              <span className="mb-2 inline-block rounded-full bg-black/55 px-2.5 py-1 text-xs font-semibold text-white ring-1 ring-white/15">
                 {blogger.topic}
               </span>
               <h2 className="font-display text-[30px] leading-none font-semibold tracking-tight">{blogger.name}</h2>

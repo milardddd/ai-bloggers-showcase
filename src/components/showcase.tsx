@@ -80,9 +80,7 @@ export function Showcase() {
             className="mt-4 font-display text-[40px] leading-[1.02] font-semibold tracking-tight sm:text-6xl"
           >
             Живые истории.{" "}
-            <span className="bg-gradient-to-r from-[#B79CFF] via-[#FF5C8A] to-[#5CE1E6] bg-clip-text text-transparent">
-              Только не совсем люди.
-            </span>
+            Только не совсем люди.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 16 }}

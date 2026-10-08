@@ -50,7 +50,7 @@ export function BloggerCard({ blogger, index, onOpen }: Props) {
           <div className="absolute inset-x-0 bottom-0 hidden h-16 bg-gradient-to-t from-surface to-transparent lg:block" />
 
           <div className="absolute inset-x-4 top-4 flex justify-end">
-            <span className="rounded-full bg-ink px-2.5 py-1 text-xs font-semibold text-black">
+            <span className="rounded-full bg-black/55 px-2.5 py-1 text-xs font-semibold text-white ring-1 ring-white/15 backdrop-blur-md">
               {blogger.topic}
             </span>
           </div>
