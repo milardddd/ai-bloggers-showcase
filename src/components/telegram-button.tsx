@@ -13,14 +13,27 @@ export function TelegramIcon({ className = "size-5" }: { className?: string }) {
   );
 }
 
-/** Переход по ссылке в Telegram: внутри Mini App её открывает сам Telegram, без выхода во внешний браузер */
+// Внутри Mini App переход уже запущен: повторные тапы не должны ставить новые /start в очередь
+let leavingMiniApp = false;
+
+/**
+ * Переход по ссылке в Telegram. Внутри Mini App ссылку открывает сам Telegram, без выхода во
+ * внешний браузер. Ссылка ведёт в чат того же бота, поверх которого открыт Mini App: пока он
+ * открыт, Telegram ничего не показывает и копит переходы, а при закрытии отправляет столько /start,
+ * сколько было тапов. Поэтому переходим один раз и сразу закрываем Mini App — человек видит чат.
+ */
 export function openTelegram(e: MouseEvent<HTMLAnchorElement>, href: string) {
-  haptic("medium");
   const app = getWebApp();
-  if (app) {
-    e.preventDefault();
-    app.openTelegramLink(href);
+  if (!app) {
+    haptic("medium");
+    return;
   }
+  e.preventDefault();
+  if (leavingMiniApp) return;
+  leavingMiniApp = true;
+  haptic("medium");
+  app.openTelegramLink(href);
+  app.close();
 }
 
 type Props = {

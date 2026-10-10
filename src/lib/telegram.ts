@@ -71,6 +71,7 @@ type TelegramWebApp = {
   ready: () => void;
   expand: () => void;
   openTelegramLink: (url: string) => void;
+  close: () => void;
   HapticFeedback?: {
     impactOccurred: (style: "light" | "medium" | "heavy" | "rigid" | "soft") => void;
     selectionChanged: () => void;
